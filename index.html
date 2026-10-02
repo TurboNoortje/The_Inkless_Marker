@@ -1,1 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Inkless Marker Co. — 0% Liquid Ink, 100% Precision</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sand: {
+                            50: '#FAF8F5',
+                            100: '#F5F1EA',
+                            200: '#E6DEC',
+                            300: '#D5C7B7',
+                            800: '#3D362E',
+                            900: '#231F1B',
+                        },
+                        birch: {
+                            light: '#F4E8D6',
+                            mid: '#E2CEB1',
+                            dark: '#C8AA82'
+                        },
+                        obsidian: '#141414',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
+    <style>
+        /* Custom Styles for Wood Grain and Glass Reflection */
+        .birch-grain {
+            background-color: #EEDCC4;
+            background-image: 
+                linear-gradient(90deg, rgba(210,180,140,0.25) 0%, rgba(255,255,255,0.3) 20%, rgba(190,150,110,0.2) 40%, rgba(240,220,190,0.35) 60%, rgba(200,165,125,0.25) 80%, rgba(220,190,150,0.3) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(160,120,80,0.05) 3px, rgba(160,120,80,0.05) 6px);
+        }
+        
+        .glass-chamber {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.8), inset 0 -4px 6px rgba(0, 0, 0, 0.15), 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .glass-reflection {
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.4) 100%);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F5F1EA;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #D5C7B7;
+            border-radius: 9999px;
+        }
+
+        /* Marker Glow Effect */
+        .color-glow {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animation for Exploded View */
+        .exploded-cap {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .exploded-refill-1 {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+        }
+        .exploded-refill-2 {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+        }
+
+        .is-exploded .exploded-cap {
+            transform: translateX(110px);
+        }
+        .is-exploded .exploded-refill-1 {
+            transform: translateX(45px);
+        }
+        .is-exploded .exploded-refill-2 {
+            transform: translateX(85px);
+        }
+    </style>
+</head>
+<body class="bg-sand-50 text-obsidian font-sans antialiased selection:bg-obsidian selection:text-white custom-scrollbar">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-obsidian text-sand-50 py-2 px-4 text-center text-xs tracking-wider uppercase font-mono flex items-center justify-center space-x-3">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>0% Liquid Ink Technology • Zero Stains • Lifetime Birch Barrel Guarantee</span>
+        <span class="hidden md:inline text-sand-300">| Use code <strong class="text-white underline">EVERLASTING10</strong> for 10% OFF</span>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 bg-sand-50/90 backdrop-blur-md border-b border-sand-200 transition-all duration-300" id="mainHeader">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-obsidian text-sand-50 flex items-center justify-center font-mono font-bold text-xl shadow-md group-hover:scale-105 transition-transform">
+                    IM
+                </div>
+                <div>
+                    <span class="font-mono text-lg font-bold tracking-tight uppercase block leading-none">THE INKLESS MARKER</span>
+                    <span class="text-[10px] tracking-widest text-stone-500 uppercase font-semibold">Co. Studio Edition</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-700">
+                <a href="#overview" class="hover:text-obsidian transition-colors">Overview</a>
+                <a href="#story" class="hover:text-obsidian transition-colors">The Story</a>
+                <a href="#colors" class="hover:text-obsidian transition-colors">10 Core Colors</a>
+                <a href="#custom-studio" class="hover:text-obsidian transition-colors">Custom Studio</a>
+                <a href="#refills" class="hover:text-obsidian transition-colors">Refill Shop</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart()" class="relative p-2.5 rounded-full hover:bg-sand-100 text-stone-800 transition-colors focus:outline-none" aria-label="Cart">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-obsidian text-white text-[11px] font-mono font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+                </button>
+                <a href="#colors" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-obsidian text-sand-50 font-medium text-sm hover:bg-stone-800 transition-all shadow-sm hover:shadow-md">
+                    Order Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="overview" class="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-sand-50 via-sand-100/50 to-sand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Left Hero Text -->
+                <div class="lg:col-span-5 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-sand-200/80 border border-sand-300/60 text-xs font-mono font-semibold text-stone-800">
+                        <i class="fa-solid fa-feather text-amber-700"></i>
+                        <span>Scandinavian Birch & Blown Glass Construction</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-obsidian leading-[1.1]">
+                        The Marker Reinvented.<br>
+                        <span class="text-stone-500 font-normal italic">0% Liquid Ink.</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-stone-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Engineered with solid-state inkless core technology. Never dries out, never bleeds through paper, and guarantees <strong>zero stains on hands or clothing</strong>.
+                    </p>
+
+                    <!-- Core Specs Badges -->
+                    <div class="grid grid-cols-3 gap-3 pt-2 text-left">
+                        <div class="p-3 rounded-xl bg-white/80 border border-sand-200 shadow-sm">
+                            <p class="text-xs text-stone-500 font-mono">STAIN PROOF</p>
+                            <p class="text-sm font-bold text-obsidian">0% Liquid</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/80 border border-sand-200 shadow-sm">
+                            <p class="text-xs text-stone-500 font-mono">INTERNAL STORAGE</p>
+                            <p class="text-sm font-bold text-obsidian">2 Secret Refills</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/80 border border-sand-200 shadow-sm">
+                            <p class="text-xs text-stone-500 font-mono">MATERIALS</p>
+                            <p class="text-sm font-bold text-obsidian">Birch & Glass</p>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <button onclick="addToCartCurrentColor()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-obsidian text-white font-medium text-base hover:bg-stone-800 transition-all shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 group">
+                            <span>Add Selected Marker — $24.95</span>
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <a href="#story" class="w-full sm:w-auto px-6 py-4 rounded-xl bg-white border border-sand-300 text-stone-800 font-medium text-base hover:bg-sand-100 transition-all text-center">
+                            How It Works
+                        </a>
+                    </div>
+
+                    <!-- Trust indicators -->
+                    <div class="flex items-center justify-center lg:justify-start space-x-6 text-xs text-stone-500 font-mono pt-2">
+                        <span><i class="fa-solid fa-truck-fast text-stone-700 mr-1.5"></i> Fast Shipping</span>
+                        <span><i class="fa-solid fa-shield-halved text-stone-700 mr-1.5"></i> Lifetime Guarantee</span>
+                        <span><i class="fa-solid fa-rotate-left text-stone-700 mr-1.5"></i> 30-Day Returns</span>
+                    </div>
+                </div>
+
+                <!-- Right Interactive Marker Showcase -->
+                <div class="lg:col-span-7 flex flex-col items-center justify-center">
+                    
+                    <div class="relative w-full max-w-2xl bg-white/60 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-sand-200 shadow-xl overflow-hidden" id="markerContainer">
+                        
+                        <!-- Top Controls inside card -->
+                        <div class="flex items-center justify-between mb-8">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                                <span class="text-xs font-mono text-stone-500 ml-2">INTERACTIVE PREVIEW MODE</span>
+                            </div>
+                            
+                            <!-- Exploded View Toggle -->
+                            <button id="explodeBtn" onclick="toggleExplodedView()" class="px-3 py-1.5 rounded-lg bg-sand-200 hover:bg-sand-300 text-xs font-mono font-semibold text-stone-800 transition-colors flex items-center space-x-2">
+                                <i class="fa-solid fa-layer-group"></i>
+                                <span id="explodeBtnText">View Secret Refill Compartments</span>
+                            </button>
+                        </div>
+
+                        <!-- ULTRA-REALISTIC MARKER VISUAL -->
+                        <div class="py-12 px-2 flex items-center justify-center overflow-x-auto custom-scrollbar">
+                            
+                            <div class="relative flex items-center transition-all duration-500 py-6" id="markerAssembly">
+                                
+                                <!-- 1. PRECISION TIP -->
+                                <div class="relative z-10 flex items-center">
+                                    <!-- Metallic nib holder -->
+                                    <div class="w-5 h-4 bg-gradient-to-r from-stone-300 via-stone-100 to-stone-400 rounded-l-sm border-r border-stone-400"></div>
+                                    <!-- Solid core nib tip -->
+                                    <div id="markerTip" class="w-6 h-3 rounded-l-full color-glow shadow-sm" style="background-color: #EC4899;"></div>
+                                </div>
+
+                                <!-- 2. FRONT WHITE MOLDED CAP/GRIP -->
+                                <div class="w-10 h-10 bg-gradient-to-b from-stone-100 via-white to-stone-200 rounded-l-md border-y border-l border-stone-300/80 shadow-md flex items-center justify-center relative">
+                                    <div class="w-1.5 h-full bg-stone-300/50"></div>
+                                </div>
+
+                                <!-- 3. FRONT BIRCH WOOD SECTION -->
+                                <div class="w-24 sm:w-28 h-10 birch-grain border-y border-stone-300/70 relative flex items-center justify-center shadow-inner">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-black/10"></div>
+                                    <!-- Engraved Wood Detail Rings -->
+                                    <div class="w-full flex justify-between px-2">
+                                        <div class="w-0.5 h-full bg-stone-400/30"></div>
+                                        <div class="w-0.5 h-full bg-stone-400/30"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 4. GLASS MIDDLE VIEWING CHAMBER -->
+                                <div class="relative w-28 sm:w-36 h-12 rounded-lg glass-chamber flex items-center justify-center px-1 mx-0.5 z-20 shadow-lg">
+                                    <!-- Solid Inkless Core Inside Glass -->
+                                    <div id="markerGlassCore" class="w-full h-6 rounded-full color-glow relative overflow-hidden shadow-inner" style="background-color: #EC4899;">
+                                        <!-- Core texture / sheen -->
+                                        <div class="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-black/20"></div>
+                                        <div class="absolute top-1 left-2 right-2 h-1 bg-white/40 rounded-full blur-[1px]"></div>
+                                    </div>
+                                    <!-- Glass Reflection Overlay -->
+                                    <div class="absolute inset-0 rounded-lg glass-reflection pointer-events-none"></div>
+                                    <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-white/90 border border-stone-200 rounded text-[9px] font-mono font-bold tracking-widest text-stone-600 shadow-2xs">
+                                        VIEW CHAMBER
+                                    </div>
+                                </div>
+
+                                <!-- 5. REAR BIRCH WOOD BARREL WITH BRAND PRINT -->
+                                <div class="w-48 sm:w-56 h-10 birch-grain border-y border-stone-300/70 relative flex items-center justify-center shadow-inner">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-black/10"></div>
+                                    
+                                    <!-- PRINTED BRAND TEXT (STRICT USER REQUIREMENT: THE INKLESS MARKER) -->
+                                    <div class="z-10 font-mono text-[11px] font-extrabold tracking-[0.25em] text-stone-800/90 uppercase select-none drop-shadow-2xs text-center">
+                                        THE INKLESS MARKER
+                                    </div>
+
+                                    <div class="absolute right-3 w-1 h-full border-r border-dashed border-stone-500/40"></div>
+                                </div>
+
+                                <!-- 6. SECRET REFILL COMPARTMENTS (VISIBLE IN EXPLODED VIEW) -->
+                                <div class="relative flex items-center">
+                                    
+                                    <!-- Secret Refill Core #1 (Hidden/Explodable) -->
+                                    <div class="exploded-refill-1 absolute left-0 z-0 flex items-center pointer-events-none">
+                                        <div class="w-12 h-4 rounded-full border border-stone-400/50 opacity-90 shadow-md flex items-center justify-center text-[8px] font-mono font-bold text-white" style="background-color: #EC4899;">
+                                            REFILL #1
+                                        </div>
+                                    </div>
+
+                                    <!-- Secret Refill Core #2 (Hidden/Explodable) -->
+                                    <div class="exploded-refill-2 absolute left-0 z-0 flex items-center pointer-events-none">
+                                        <div class="w-12 h-4 rounded-full border border-stone-400/50 opacity-90 shadow-md flex items-center justify-center text-[8px] font-mono font-bold text-white" style="background-color: #EC4899;">
+                                            REFILL #2
+                                        </div>
+                                    </div>
+
+                                    <!-- Rear Molded End Cap -->
+                                    <div class="exploded-cap z-10 w-8 h-10 bg-gradient-to-b from-stone-100 via-white to-stone-200 rounded-r-lg border-y border-r border-stone-300/80 shadow-md flex items-center justify-center relative">
+                                        <div class="w-2 h-2 rounded-full bg-stone-300"></div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Exploded view detail annotation -->
+                        <div id="explodedAnnotation" class="hidden text-center bg-amber-50/90 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 font-mono mb-4 animate-fade-in">
+                            <i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>
+                            <strong>Dual Secret Chambers Unlocked:</strong> The rear Birch wood barrel unscrews to store 2 extra solid Inkless refills inside the pen itself!
+                        </div>
+
+                        <!-- Active Color Info Bar -->
+                        <div class="mt-4 pt-6 border-t border-sand-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div class="flex items-center space-x-3">
+                                <div id="selectedColorDot" class="w-6 h-6 rounded-full border-2 border-white shadow-md" style="background-color: #EC4899;"></div>
+                                <div>
+                                    <p class="text-xs text-stone-500 font-mono uppercase">Selected Core Shade</p>
+                                    <p id="selectedColorName" class="text-sm font-bold text-obsidian">Magenta Pink</p>
+                                </div>
+                            </div>
+
+                            <!-- Color Quick Palette Swatches -->
+                            <div class="flex items-center space-x-1.5 bg-sand-100/80 p-1.5 rounded-2xl border border-sand-200" id="heroSwatches">
+                                <!-- JS populated swatches -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT NARRATIVE / STORY SECTION -->
+    <section id="story" class="py-20 bg-white border-y border-sand-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono font-bold tracking-widest text-amber-800 uppercase bg-amber-100/80 px-3 py-1 rounded-full">
+                    The Genesis Narrative
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-obsidian mt-4 tracking-tight">
+                    The Eclipse of Liquid Ink
+                </h2>
+                <p class="text-stone-600 mt-3 text-base sm:text-lg">
+                    Why traditional writing and sketching tools were destined to evolve into something cleaner, smarter, and permanent.
+                </p>
+            </div>
+
+            <!-- Timeline Narrative Steps -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                
+                <!-- Connector line desktop -->
+                <div class="hidden md:block absolute top-1/2 left-12 right-12 h-0.5 bg-sand-200 -z-0 -translate-y-6"></div>
+
+                <!-- Step 1: Pencil Outlines -->
+                <div class="relative bg-sand-50 rounded-2xl p-6 border border-sand-200 hover:shadow-lg transition-all z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-stone-200 text-stone-700 flex items-center justify-center font-mono font-bold text-lg mb-5 shadow-sm">
+                            01
+                        </div>
+                        <h3 class="text-lg font-bold text-obsidian mb-2">Pencil Outlines</h3>
+                        <p class="text-sm text-stone-600 leading-relaxed">
+                            Pencils provide control, but smudge easily across pages, require perpetual sharpening, and lack bold color density.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-sand-200/60 flex items-center text-xs text-stone-500 font-mono">
+                        <i class="fa-solid fa-pencil text-stone-400 mr-2"></i> Smudges & Breaks
+                    </div>
+                </div>
+
+                <!-- Step 2: Marker Lines -->
+                <div class="relative bg-sand-50 rounded-2xl p-6 border border-sand-200 hover:shadow-lg transition-all z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-stone-200 text-stone-700 flex items-center justify-center font-mono font-bold text-lg mb-5 shadow-sm">
+                            02
+                        </div>
+                        <h3 class="text-lg font-bold text-obsidian mb-2">Traditional Markers</h3>
+                        <p class="text-sm text-stone-600 leading-relaxed">
+                            Felt-tip markers offered vibrancy, but rely on volatile liquid solvent inks that bleed through paper and dry out in days.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-sand-200/60 flex items-center text-xs text-stone-500 font-mono">
+                        <i class="fa-solid fa-pen-nib text-stone-400 mr-2"></i> Paper Bleed
+                    </div>
+                </div>
+
+                <!-- Step 3: Ink Spill Disaster -->
+                <div class="relative bg-red-50/60 rounded-2xl p-6 border border-red-200 hover:shadow-lg transition-all z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-red-100 text-red-700 flex items-center justify-center font-mono font-bold text-lg mb-5 shadow-sm">
+                            03
+                        </div>
+                        <h3 class="text-lg font-bold text-red-950 mb-2">The Ink Spill Disaster</h3>
+                        <p class="text-sm text-red-900/80 leading-relaxed">
+                            One accidental drop or cap pop leads to ruined white shirts, stained leather bags, and messy ink on palms and fingers.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-red-200/60 flex items-center text-xs text-red-700 font-mono font-semibold">
+                        <i class="fa-solid fa-shirt text-red-500 mr-2"></i> Permanent Stains
+                    </div>
+                </div>
+
+                <!-- Step 4: The Inkless Solution -->
+                <div class="relative bg-obsidian text-white rounded-2xl p-6 border border-stone-800 hover:shadow-xl transition-all z-10 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-400 text-obsidian flex items-center justify-center font-mono font-bold text-lg mb-5 shadow-sm">
+                            04
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">The Inkless Marker</h3>
+                        <p class="text-sm text-stone-300 leading-relaxed">
+                            Solid-state core matrix oxidation. <strong>0% liquid ink</strong>. Zero chance of stains on clothes, hands, or furniture.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-stone-800 flex items-center text-xs text-amber-300 font-mono font-semibold">
+                        <i class="fa-solid fa-shield-check text-amber-400 mr-2"></i> 100% Stain-Free
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Material & Feature Highlight Grid -->
+            <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="flex items-start space-x-4 p-6 rounded-2xl bg-sand-50 border border-sand-200">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-tree"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-obsidian text-base">Light Birch Wood Barrel</h4>
+                        <p class="text-sm text-stone-600 mt-1">Sourced from sustainable Scandinavian forests, hand-sanded to a soft matte finish stamped with 'THE INKLESS MARKER'.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4 p-6 rounded-2xl bg-sand-50 border border-sand-200">
+                    <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-800 flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-vial-circle-check"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-obsidian text-base">Blown Glass Core Window</h4>
+                        <p class="text-sm text-stone-600 mt-1">High-clarity borosilicate glass center allows you to inspect core shade and remaining life at a glance.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4 p-6 rounded-2xl bg-sand-50 border border-sand-200">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-box-archive"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-obsidian text-base">2 Internal Secret Refills</h4>
+                        <p class="text-sm text-stone-600 mt-1">Unscrew the rear cap to reveal two hidden backup refill cores embedded directly into the birch barrel structure.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 10 CORE COLORS SECTION -->
+    <section id="colors" class="py-20 bg-sand-100/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs font-mono font-bold tracking-widest text-stone-500 uppercase">
+                        The Master Collection
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-obsidian mt-2 tracking-tight">
+                        10 Vibrant Core Shades
+                    </h2>
+                    <p class="text-stone-600 mt-2 text-base">
+                        Select an individual shade or grab the complete Master Set in a handcrafted wooden storage box.
+                    </p>
+                </div>
+
+                <div class="mt-6 md:mt-0 flex items-center space-x-3">
+                    <button onclick="addAllColorsToCart()" class="px-5 py-3 rounded-xl bg-obsidian text-sand-50 text-sm font-semibold hover:bg-stone-800 transition-all shadow-sm">
+                        <i class="fa-solid fa-layer-group mr-2"></i> Add Full 10-Pack ($149.00)
+                    </button>
+                </div>
+            </div>
+
+            <!-- 10 Color Cards Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6" id="coreColorGrid">
+                <!-- Javascript will inject the 10 Core Color Cards here -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CUSTOM COLOR STUDIO SECTION -->
+    <section id="custom-studio" class="py-20 bg-white border-y border-sand-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Details -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-stone-100 border border-stone-200 text-xs font-mono font-semibold text-stone-800">
+                        <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i>
+                        <span>Bespoke Inkless Studio</span>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-obsidian tracking-tight">
+                        Create Your Custom Inkless Shade
+                    </h2>
+
+                    <p class="text-stone-600 text-base leading-relaxed">
+                        Need an exact pantone match for architectural drawings, brand guidelines, or custom artwork? Select any custom HEX code or pick from our studio presets below.
+                    </p>
+
+                    <!-- Popular Custom Presets -->
+                    <div>
+                        <label class="block text-xs font-mono font-bold text-stone-500 uppercase mb-3">Popular Studio Presets</label>
+                        <div class="flex flex-wrap gap-2" id="presetButtons">
+                            <!-- Preset Buttons injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Custom HEX Picker Input -->
+                    <div class="pt-4 border-t border-sand-200">
+                        <label class="block text-xs font-mono font-bold text-stone-500 uppercase mb-2">Custom Color Picker</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="color" id="customColorPicker" value="#008080" class="w-12 h-12 rounded-xl cursor-pointer border-2 border-sand-300 p-1 bg-white">
+                            <div class="flex-1">
+                                <input type="text" id="customHexInput" value="#008080" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 font-mono text-sm uppercase font-bold focus:outline-none focus:ring-2 focus:ring-obsidian">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <button onclick="addCustomToCart()" class="px-6 py-3.5 rounded-xl bg-obsidian text-white font-medium text-sm hover:bg-stone-800 transition-all shadow-md flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>Order Custom Color — $29.95</span>
+                        </button>
+                        <a href="mailto:custom@inklessmarker.com?subject=Custom%20Color%20Inquiry" class="px-5 py-3.5 rounded-xl bg-sand-100 border border-sand-300 text-stone-800 font-medium text-sm hover:bg-sand-200 transition-all text-center flex items-center justify-center space-x-2">
+                            <i class="fa-regular fa-envelope"></i>
+                            <span>Email Studio Team</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Custom Preview Container -->
+                <div class="lg:col-span-7 bg-sand-50 border border-sand-200 rounded-3xl p-8 flex flex-col items-center justify-center relative overflow-hidden shadow-inner">
+                    <div class="text-xs font-mono font-semibold text-stone-500 mb-6 uppercase tracking-wider">
+                        Live Custom Studio Rendering
+                    </div>
+
+                    <!-- Interactive Custom Marker Display -->
+                    <div class="w-full max-w-lg py-8 flex items-center justify-center">
+                        <div class="relative flex items-center">
+                            <!-- Tip -->
+                            <div class="w-4 h-3 rounded-l-full shadow-sm" id="customTipPreview" style="background-color: #008080;"></div>
+                            <div class="w-8 h-8 bg-gradient-to-b from-stone-100 via-white to-stone-200 rounded-l border-y border-l border-stone-300"></div>
+                            <div class="w-20 h-8 birch-grain border-y border-stone-300"></div>
+                            
+                            <!-- Glass Chamber Custom -->
+                            <div class="w-28 h-10 rounded-lg glass-chamber flex items-center justify-center px-1 shadow-md">
+                                <div id="customCorePreview" class="w-full h-5 rounded-full transition-colors duration-300 shadow-inner" style="background-color: #008080;"></div>
+                            </div>
+
+                            <!-- Birch Barrel with Strict Printed Name -->
+                            <div class="w-44 h-8 birch-grain border-y border-stone-300 flex items-center justify-center">
+                                <span class="font-mono text-[9px] font-bold tracking-widest text-stone-800 uppercase">THE INKLESS MARKER</span>
+                            </div>
+                            <div class="w-6 h-8 bg-stone-200 rounded-r-md border-y border-r border-stone-300"></div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Spec Label -->
+                    <div class="mt-6 bg-white p-4 rounded-xl border border-sand-200 w-full max-w-md flex items-center justify-between text-xs font-mono">
+                        <div>
+                            <span class="text-stone-400 block">SPECIFICATION</span>
+                            <span id="customColorLabel" class="font-bold text-obsidian text-sm">Deep Teal (#008080)</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-stone-400 block">LEAD TIME</span>
+                            <span class="font-bold text-emerald-600">Ships in 48 Hours</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- REFILL SHOP SECTION -->
+    <section id="refills" class="py-20 bg-sand-100/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono font-bold tracking-widest text-amber-800 uppercase bg-amber-100/80 px-3 py-1 rounded-full">
+                    Endless Longevity
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-obsidian mt-4 tracking-tight">
+                    Inkless Core Refill Packs
+                </h2>
+                <p class="text-stone-600 mt-3 text-base sm:text-lg">
+                    Packaged in clear, high-durability acrylic storage cases. Easy twist-and-insert core replacement system.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Refill Pack 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-sand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="h-40 bg-sand-50 rounded-xl mb-6 flex items-center justify-center p-4 border border-sand-200 relative overflow-hidden">
+                            <div class="w-32 h-20 bg-white/80 border border-stone-300 rounded-lg p-2 flex flex-col justify-between shadow-sm">
+                                <div class="text-[9px] font-mono text-stone-400 uppercase font-bold">10-Piece Clear Acrylic Case</div>
+                                <div class="grid grid-cols-5 gap-1">
+                                    <div class="h-8 bg-stone-900 rounded-sm"></div>
+                                    <div class="h-8 bg-stone-900 rounded-sm"></div>
+                                    <div class="h-8 bg-stone-900 rounded-sm"></div>
+                                    <div class="h-8 bg-stone-900 rounded-sm"></div>
+                                    <div class="h-8 bg-stone-900 rounded-sm"></div>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-mono px-2 py-0.5 rounded">10 CORES</span>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-obsidian">Monochrome Obsidian 10-Pack Refills</h3>
+                        <p class="text-stone-600 text-sm mt-2">10 high-density solid black inkless cores for writing, sketching, and everyday note-taking.</p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-sand-200 flex items-center justify-between">
+                        <span class="text-xl font-extrabold font-mono text-obsidian">$12.95</span>
+                        <button onclick="addRefillToCart('Monochrome Obsidian 10-Pack', 12.95)" class="px-4 py-2 rounded-xl bg-sand-200 hover:bg-obsidian hover:text-white font-medium text-xs transition-colors">
+                            Add Refill
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Refill Pack 2 -->
+                <div class="bg-white rounded-2xl p-6 border-2 border-obsidian shadow-md hover:shadow-lg transition-all flex flex-col justify-between relative">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-obsidian text-[10px] font-mono font-bold uppercase px-3 py-1 rounded-full shadow-xs">
+                        Most Popular
+                    </span>
+
+                    <div>
+                        <div class="h-40 bg-sand-50 rounded-xl mb-6 flex items-center justify-center p-4 border border-sand-200 relative overflow-hidden">
+                            <div class="w-32 h-20 bg-white/80 border border-stone-300 rounded-lg p-2 flex flex-col justify-between shadow-sm">
+                                <div class="text-[9px] font-mono text-stone-400 uppercase font-bold">Rainbow Spectrum Case</div>
+                                <div class="grid grid-cols-5 gap-1">
+                                    <div class="h-8 bg-pink-500 rounded-sm"></div>
+                                    <div class="h-8 bg-blue-500 rounded-sm"></div>
+                                    <div class="h-8 bg-emerald-500 rounded-sm"></div>
+                                    <div class="h-8 bg-red-500 rounded-sm"></div>
+                                    <div class="h-8 bg-purple-500 rounded-sm"></div>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 right-3 bg-amber-400 text-obsidian text-[10px] font-mono px-2 py-0.5 rounded font-bold">10 COLORS</span>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-obsidian">Rainbow Master 10-Pack Refills</h3>
+                        <p class="text-stone-600 text-sm mt-2">1 of each core shade (Pink, Blue, Green, Red, Purple, Grey, Black, White, Yellow, Orange).</p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-sand-200 flex items-center justify-between">
+                        <span class="text-xl font-extrabold font-mono text-obsidian">$19.95</span>
+                        <button onclick="addRefillToCart('Rainbow Master 10-Pack', 19.95)" class="px-5 py-2.5 rounded-xl bg-obsidian text-white font-medium text-xs hover:bg-stone-800 transition-colors shadow-sm">
+                            Add Refill
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Refill Pack 3 -->
+                <div class="bg-white rounded-2xl p-6 border border-sand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="h-40 bg-sand-50 rounded-xl mb-6 flex items-center justify-center p-4 border border-sand-200 relative overflow-hidden">
+                            <div class="w-32 h-20 bg-white/80 border border-stone-300 rounded-lg p-2 flex flex-col justify-between shadow-sm">
+                                <div class="text-[9px] font-mono text-stone-400 uppercase font-bold">Bespoke Custom Case</div>
+                                <div class="grid grid-cols-5 gap-1">
+                                    <div class="h-8 bg-teal-600 rounded-sm"></div>
+                                    <div class="h-8 bg-coral-500 rounded-sm" style="background:#FF7F50"></div>
+                                    <div class="h-8 bg-amber-600 rounded-sm"></div>
+                                    <div class="h-8 bg-indigo-600 rounded-sm"></div>
+                                    <div class="h-8 bg-teal-600 rounded-sm"></div>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 right-3 bg-purple-900 text-white text-[10px] font-mono px-2 py-0.5 rounded">CUSTOM</span>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-obsidian">Custom Studio 10-Pack Refills</h3>
+                        <p class="text-stone-600 text-sm mt-2">Choose any mix of custom shades created in the Studio. Packaged in a compact acrylic desk case.</p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-sand-200 flex items-center justify-between">
+                        <span class="text-xl font-extrabold font-mono text-obsidian">$21.95</span>
+                        <button onclick="addRefillToCart('Custom Studio 10-Pack', 21.95)" class="px-4 py-2 rounded-xl bg-sand-200 hover:bg-obsidian hover:text-white font-medium text-xs transition-colors">
+                            Add Refill
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE-OVER CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none">
+        <!-- Backdrop -->
+        <div id="cartBackdrop" onclick="toggleCart()" class="absolute inset-0 bg-stone-900/50 backdrop-blur-xs opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div id="cartPanel" class="w-screen max-w-md bg-sand-50 shadow-2xl flex flex-col translate-x-full transition-transform duration-300 pointer-events-auto border-l border-sand-200">
+                
+                <!-- Cart Header -->
+                <div class="p-6 bg-white border-b border-sand-200 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-bag-shopping text-xl text-obsidian"></i>
+                        <h2 class="text-lg font-bold text-obsidian font-mono uppercase">Your Shopping Cart</h2>
+                    </div>
+                    <button onclick="toggleCart()" class="p-2 text-stone-400 hover:text-obsidian rounded-lg hover:bg-sand-100 transition-colors">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Free Shipping Progress Bar -->
+                <div class="bg-amber-50 px-6 py-3 border-b border-amber-200/60 text-xs font-mono text-amber-900">
+                    <div class="flex justify-between mb-1 font-semibold">
+                        <span id="shippingText">Add $15.05 for Free Shipping!</span>
+                        <span id="shippingPercent">70%</span>
+                    </div>
+                    <div class="w-full bg-amber-200 rounded-full h-1.5 overflow-hidden">
+                        <div id="shippingBar" class="bg-amber-600 h-full transition-all duration-300" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <!-- Cart Items Container -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar" id="cartItemsList">
+                    <!-- Cart items rendered dynamically -->
+                </div>
+
+                <!-- Cart Footer -->
+                <div class="p-6 bg-white border-t border-sand-200 space-y-4">
+                    
+                    <!-- Promo Code Input -->
+                    <div class="flex space-x-2">
+                        <input type="text" id="promoInput" placeholder="Promo code (try EVERLASTING10)" class="flex-1 px-3 py-2 border border-sand-300 rounded-xl text-xs font-mono uppercase focus:outline-none focus:ring-1 focus:ring-obsidian">
+                        <button onclick="applyPromoCode()" class="px-4 py-2 bg-sand-200 hover:bg-sand-300 text-stone-800 text-xs font-mono font-bold rounded-xl transition-colors">
+                            Apply
+                        </button>
+                    </div>
+
+                    <div id="promoMessage" class="hidden text-[11px] font-mono text-emerald-600">
+                        <i class="fa-solid fa-circle-check mr-1"></i> Promo code EVERLASTING10 applied (10% OFF)!
+                    </div>
+
+                    <!-- Pricing breakdown -->
+                    <div class="space-y-2 text-xs font-mono text-stone-600 border-t border-sand-100 pt-3">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span id="cartSubtotal">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-emerald-600 hidden" id="discountRow">
+                            <span>Discount (10%)</span>
+                            <span id="cartDiscount">-$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Shipping</span>
+                            <span id="cartShipping">Calculated at checkout</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-obsidian border-t border-sand-200 pt-2">
+                            <span>Total</span>
+                            <span id="cartTotal">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button onclick="openCheckoutModal()" class="w-full py-4 rounded-xl bg-obsidian text-white font-medium text-sm hover:bg-stone-800 transition-all shadow-md flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-lock text-xs"></i>
+                        <span>Proceed to Secure Checkout</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/70 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl relative border border-sand-200">
+            <button onclick="closeCheckoutModal()" class="absolute top-6 right-6 p-2 text-stone-400 hover:text-obsidian rounded-lg hover:bg-sand-100">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div id="checkoutFormContent">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-obsidian text-white flex items-center justify-center font-mono font-bold">
+                        IM
+                    </div>
+                    <div>
+                        <h3 class="font-mono font-bold text-lg text-obsidian uppercase">Express Checkout</h3>
+                        <p class="text-xs text-stone-500">The Inkless Marker Co. Official Order</p>
+                    </div>
+                </div>
+
+                <form onsubmit="handleCheckoutSubmit(event)" class="space-y-4 text-xs font-sans">
+                    <div>
+                        <label class="block font-mono text-stone-600 mb-1">Email Address</label>
+                        <input type="email" required placeholder="alex@example.com" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 focus:outline-none focus:ring-2 focus:ring-obsidian">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-mono text-stone-600 mb-1">First Name</label>
+                            <input type="text" required placeholder="Alex" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 focus:outline-none focus:ring-2 focus:ring-obsidian">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-stone-600 mb-1">Last Name</label>
+                            <input type="text" required placeholder="Morgan" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 focus:outline-none focus:ring-2 focus:ring-obsidian">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-mono text-stone-600 mb-1">Shipping Address</label>
+                        <input type="text" required placeholder="123 Birch Wood Avenue" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 focus:outline-none focus:ring-2 focus:ring-obsidian">
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="col-span-2">
+                            <label class="block font-mono text-stone-600 mb-1">Card Number</label>
+                            <input type="text" required placeholder="4242 •••• •••• 4242" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 font-mono focus:outline-none focus:ring-2 focus:ring-obsidian">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-stone-600 mb-1">CVC</label>
+                            <input type="text" required placeholder="123" class="w-full px-4 py-2.5 rounded-xl border border-sand-300 font-mono focus:outline-none focus:ring-2 focus:ring-obsidian">
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-sand-200">
+                        <button type="submit" class="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all shadow-md flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span id="payButtonText">Complete Order ($0.00)</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Success confirmation screen inside modal -->
+            <div id="checkoutSuccessContent" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto animate-bounce">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-obsidian">Order Confirmed!</h3>
+                <p class="text-stone-600 text-sm max-w-xs mx-auto">
+                    Thank you for choosing <strong>The Inkless Marker Co.</strong> Your handcrafted Birch marker and refills are being prepared for dispatch.
+                </p>
+                <div class="p-4 bg-sand-50 rounded-xl text-xs font-mono text-stone-600 border border-sand-200">
+                    Order Ref: #INK-<span id="orderRefNumber">89210</span> • Tracking details emailed shortly.
+                </div>
+                <button onclick="closeCheckoutModal(); resetCart();" class="px-6 py-3 rounded-xl bg-obsidian text-white font-medium text-xs hover:bg-stone-800">
+                    Back to Studio
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-obsidian text-sand-50 py-16 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
+                
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-white text-obsidian flex items-center justify-center font-mono font-bold text-base">
+                            IM
+                        </div>
+                        <span class="font-mono text-sm font-bold tracking-widest uppercase">THE INKLESS MARKER</span>
+                    </div>
+                    <p class="text-stone-400 text-xs leading-relaxed">
+                        Precision writing and drawing instruments crafted from birch wood, blown glass, and solid-state core technology. 0% Liquid Ink.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-mono text-xs font-bold text-stone-300 uppercase tracking-wider mb-4">Quick Navigation</h4>
+                    <ul class="space-y-2 text-xs text-stone-400">
+                        <li><a href="#overview" class="hover:text-white transition-colors">Overview</a></li>
+                        <li><a href="#story" class="hover:text-white transition-colors">The Story</a></li>
+                        <li><a href="#colors" class="hover:text-white transition-colors">10 Core Colors</a></li>
+                        <li><a href="#custom-studio" class="hover:text-white transition-colors">Custom Color Studio</a></li>
+                        <li><a href="#refills" class="hover:text-white transition-colors">Refill Shop</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-mono text-xs font-bold text-stone-300 uppercase tracking-wider mb-4">Guarantees</h4>
+                    <ul class="space-y-2 text-xs text-stone-400">
+                        <li><i class="fa-solid fa-check text-amber-400 mr-2"></i> Lifetime Birch Barrel Warranty</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-2"></i> Zero Liquid Ink Guarantee</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-2"></i> Plastic Neutral Packaging</li>
+                        <li><i class="fa-solid fa-check text-amber-400 mr-2"></i> Fast Worldwide Dispatch</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-mono text-xs font-bold text-stone-300 uppercase tracking-wider mb-4">Studio Support</h4>
+                    <p class="text-xs text-stone-400 mb-3">Direct support for custom color inquiries and corporate orders:</p>
+                    <a href="mailto:custom@inklessmarker.com" class="inline-block px-4 py-2 bg-stone-800 hover:bg-stone-700 text-sand-50 rounded-lg font-mono text-xs transition-colors">
+                        custom@inklessmarker.com
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500 font-mono">
+                <p>&copy; 2026 The Inkless Marker Co. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-stone-300">Privacy Policy</a>
+                    <a href="#" class="hover:text-stone-300">Terms of Service</a>
+                    <a href="#" class="hover:text-stone-300">Patent Info</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        
+        // 10 MANDATORY CORE COLORS
+        const coreColors = [
+            { id: 'pink', name: 'Magenta Pink', hex: '#EC4899' },
+            { id: 'blue', name: 'Cobalt Blue', hex: '#3B82F6' },
+            { id: 'green', name: 'Emerald Green', hex: '#10B981' },
+            { id: 'red', name: 'Crimson Red', hex: '#EF4444' },
+            { id: 'purple', name: 'Velvet Purple', hex: '#8B5CF6' },
+            { id: 'grey', name: 'Slate Grey', hex: '#6B7280' },
+            { id: 'black', name: 'Obsidian Black', hex: '#111827' },
+            { id: 'white', name: 'Arctic White', hex: '#F9FAFB', border: true },
+            { id: 'yellow', name: 'Solar Yellow', hex: '#EAB308' },
+            { id: 'orange', name: 'Sunset Orange', hex: '#F97316' }
+        ];
+
+        // Custom Studio Presets
+        const customPresets = [
+            { name: 'Cyber Teal', hex: '#008080' },
+            { name: 'Sunset Coral', hex: '#FF6B6B' },
+            { name: 'Sage Green', hex: '#87A96B' },
+            { name: 'Imperial Gold', hex: '#D4AF37' },
+            { name: 'Neon Lime', hex: '#39FF14' }
+        ];
+
+        // State Management
+        let currentSelectedColor = coreColors[0]; // Magenta Pink default
+        let isExploded = false;
+        let cart = [];
+        let isPromoApplied = false;
+
+
+        // Initialize Page Elements on Load
+        window.onload = function() {
+            renderHeroSwatches();
+            renderCoreColorCards();
+            renderCustomPresets();
+            updateHeroMarker(currentSelectedColor);
+            setupCustomPicker();
+        };
+
+        // Render Hero Swatches
+        function renderHeroSwatches() {
+            const container = document.getElementById('heroSwatches');
+            container.innerHTML = coreColors.map(color => `
+                <button onclick="selectCoreColor('${color.id}')" 
+                        class="w-6 h-6 rounded-full transition-transform hover:scale-125 focus:outline-none ${color.id === currentSelectedColor.id ? 'ring-2 ring-obsidian scale-110' : ''}" 
+                        style="background-color: ${color.hex}; ${color.border ? 'border: 1px solid #D1D5DB;' : ''}"
+                        title="${color.name}">
+                </button>
+            `).join('');
+        }
+
+        // Render Core Color Cards Grid
+        function renderCoreColorCards() {
+            const grid = document.getElementById('coreColorGrid');
+            grid.innerHTML = coreColors.map(color => `
+                <div class="bg-white rounded-2xl p-5 border border-sand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                    <div>
+                        <!-- Color Preview Box -->
+                        <div class="h-28 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden transition-transform group-hover:scale-[1.02]" style="background-color: ${color.hex}20;">
+                            <!-- Marker Tip Graphic Sample -->
+                            <div class="w-24 h-6 rounded-full shadow-inner flex items-center px-1" style="background-color: ${color.hex}; ${color.border ? 'border: 1px solid #9CA3AF;' : ''}">
+                                <div class="w-full h-1 bg-white/30 rounded-full"></div>
+                            </div>
+                        </div>
+
+                        <h3 class="font-bold text-obsidian text-sm">${color.name}</h3>
+                        <p class="text-xs text-stone-500 font-mono mt-0.5">0% Liquid Ink Core</p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-sand-100 flex items-center justify-between">
+                        <span class="font-mono font-bold text-sm text-obsidian">$24.95</span>
+                        <button onclick="addCoreToCart('${color.name}', '${color.hex}')" class="px-3 py-1.5 rounded-lg bg-sand-200 hover:bg-obsidian hover:text-white text-xs font-mono font-medium transition-colors">
+                            + Add
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Custom Presets
+        function renderCustomPresets() {
+            const container = document.getElementById('presetButtons');
+            container.innerHTML = customPresets.map(preset => `
+                <button onclick="selectCustomPreset('${preset.name}', '${preset.hex}')" class="px-3 py-1.5 rounded-xl bg-sand-100 hover:bg-sand-200 border border-sand-300 text-xs font-mono font-medium text-stone-800 transition-all flex items-center space-x-1.5">
+                    <span class="w-3 h-3 rounded-full" style="background-color: ${preset.hex}"></span>
+                    <span>${preset.name}</span>
+                </button>
+            `).join('');
+        }
+
+
+        // Select Core Color Function
+        function selectCoreColor(colorId) {
+            const color = coreColors.find(c => c.id === colorId);
+            if (color) {
+                currentSelectedColor = color;
+                updateHeroMarker(color);
+                renderHeroSwatches();
+            }
+        }
+
+        // Update Hero Marker Graphic
+        function updateHeroMarker(color) {
+            const tip = document.getElementById('markerTip');
+            const glassCore = document.getElementById('markerGlassCore');
+            const colorDot = document.getElementById('selectedColorDot');
+            const colorName = document.getElementById('selectedColorName');
+
+            if (tip) tip.style.backgroundColor = color.hex;
+            if (glassCore) glassCore.style.backgroundColor = color.hex;
+            if (colorDot) colorDot.style.backgroundColor = color.hex;
+            if (colorName) colorName.innerText = color.name;
+
+            // Update exploded refill cores too
+            document.querySelectorAll('.exploded-refill-1, .exploded-refill-2').forEach(el => {
+                const inner = el.querySelector('div');
+                if (inner) inner.style.backgroundColor = color.hex;
+            });
+        }
+
+        // Toggle Exploded Secret Refill View
+        function toggleExplodedView() {
+            const assembly = document.getElementById('markerAssembly');
+            const btnText = document.getElementById('explodeBtnText');
+            const annotation = document.getElementById('explodedAnnotation');
+
+            isExploded = !isExploded;
+
+            if (isExploded) {
+                assembly.classList.add('is-exploded');
+                btnText.innerText = "Close Secret Refill View";
+                annotation.classList.remove('hidden');
+            } else {
+                assembly.classList.remove('is-exploded');
+                btnText.innerText = "View Secret Refill Compartments";
+                annotation.classList.add('hidden');
+            }
+        }
+
+        // Custom Color Picker Setup
+        function setupCustomPicker() {
+            const picker = document.getElementById('customColorPicker');
+            const hexInput = document.getElementById('customHexInput');
+
+            picker.addEventListener('input', (e) => {
+                const hex = e.target.value;
+                hexInput.value = hex.toUpperCase();
+                updateCustomPreview("Custom Hex", hex);
+            });
+
+            hexInput.addEventListener('input', (e) => {
+                const hex = e.target.value;
+                if (/^#[0-9A-F]{6}$/i.test(hex)) {
+                    picker.value = hex;
+                    updateCustomPreview("Custom Hex", hex);
+                }
+            });
+        }
+
+        function selectCustomPreset(name, hex) {
+            document.getElementById('customColorPicker').value = hex;
+            document.getElementById('customHexInput').value = hex.toUpperCase();
+            updateCustomPreview(name, hex);
+        }
+
+        function updateCustomPreview(name, hex) {
+            document.getElementById('customTipPreview').style.backgroundColor = hex;
+            document.getElementById('customCorePreview').style.backgroundColor = hex;
+            document.getElementById('customColorLabel').innerText = `${name} (${hex.toUpperCase()})`;
+        }
+
+
+        // Shopping Cart Logic
+        function toggleCart() {
+            const backdrop = document.getElementById('cartBackdrop');
+            const panel = document.getElementById('cartPanel');
+
+            if (panel.classList.contains('translate-x-full')) {
+                // Open
+                backdrop.classList.remove('pointer-events-none', 'opacity-0');
+                backdrop.classList.add('opacity-100');
+                panel.classList.remove('translate-x-full');
+            } else {
+                // Close
+                backdrop.classList.add('pointer-events-none', 'opacity-0');
+                backdrop.classList.remove('opacity-100');
+                panel.classList.add('translate-x-full');
+            }
+        }
+
+        function addToCartCurrentColor() {
+            addCoreToCart(currentSelectedColor.name, currentSelectedColor.hex);
+            toggleCart();
+        }
+
+        function addCoreToCart(name, hex) {
+            const title = `The Inkless Marker — ${name}`;
+            const existing = cart.find(item => item.title === title);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({
+                    id: Date.now(),
+                    title: title,
+                    price: 24.95,
+                    hex: hex,
+                    qty: 1
+                });
+            }
+            updateCartUI();
+        }
+
+        function addAllColorsToCart() {
+            cart.push({
+                id: Date.now(),
+                title: 'Master Set (All 10 Inkless Markers)',
+                price: 149.00,
+                hex: '#111827',
+                qty: 1
+            });
+            updateCartUI();
+            toggleCart();
+        }
+
+        function addCustomToCart() {
+            const hex = document.getElementById('customHexInput').value;
+            const title = `Custom Studio Inkless Marker (${hex})`;
+
+            cart.push({
+                id: Date.now(),
+                title: title,
+                price: 29.95,
+                hex: hex,
+                qty: 1
+            });
+            updateCartUI();
+            toggleCart();
+        }
+
+        function addRefillToCart(name, price) {
+            const existing = cart.find(item => item.title === name);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({
+                    id: Date.now(),
+                    title: name,
+                    price: price,
+                    hex: '#D5C7B7',
+                    qty: 1
+                });
+            }
+            updateCartUI();
+            toggleCart();
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function applyPromoCode() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (code === 'EVERLASTING10') {
+                isPromoApplied = true;
+                document.getElementById('promoMessage').classList.remove('hidden');
+                document.getElementById('discountRow').classList.remove('hidden');
+                updateCartUI();
+            } else {
+                alert('Invalid promo code. Use code: EVERLASTING10');
+            }
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const list = document.getElementById('cartItemsList');
+            
+            // Total item count
+            const totalQty = cart.reduce((acc, i) => acc + i.qty, 0);
+            badge.innerText = totalQty;
+
+            if (cart.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-12 text-stone-400">
+                        <i class="fa-solid fa-box-open text-4xl mb-3"></i>
+                        <p class="text-sm font-mono">Your cart is currently empty.</p>
+                        <p class="text-xs mt-1">Select a marker color to start building your order.</p>
+                    </div>
+                `;
+            } else {
+                list.innerHTML = cart.map(item => `
+                    <div class="bg-white p-4 rounded-xl border border-sand-200 flex items-center justify-between shadow-2xs">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full border border-sand-300 flex-shrink-0" style="background-color: ${item.hex}"></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-obsidian leading-tight">${item.title}</h4>
+                                <span class="text-xs font-mono text-stone-500">$${item.price.toFixed(2)} each</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded bg-sand-100 hover:bg-sand-200 flex items-center justify-center text-xs font-bold">-</button>
+                            <span class="text-xs font-mono font-bold w-4 text-center">${item.qty}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 rounded bg-sand-100 hover:bg-sand-200 flex items-center justify-center text-xs font-bold">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Price Calculations
+            const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const discount = isPromoApplied ? subtotal * 0.10 : 0;
+            const shippingThreshold = 50.00;
+            const shipping = (subtotal >= shippingThreshold || subtotal === 0) ? 0 : 4.95;
+            const total = Math.max(0, subtotal - discount + shipping);
+
+            document.getElementById('cartSubtotal').innerText = `$${subtotal.toFixed(2)}`;
+            if (isPromoApplied) {
+                document.getElementById('cartDiscount').innerText = `-$${discount.toFixed(2)}`;
+            }
+            document.getElementById('cartShipping').innerText = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
+            document.getElementById('cartTotal').innerText = `$${total.toFixed(2)}`;
+
+            // Shipping Progress Bar
+            const remaining = Math.max(0, shippingThreshold - subtotal);
+            const shippingBar = document.getElementById('shippingBar');
+            const shippingText = document.getElementById('shippingText');
+            const shippingPercent = document.getElementById('shippingPercent');
+
+            if (subtotal >= shippingThreshold) {
+                shippingBar.style.width = '100%';
+                shippingText.innerText = 'You unlocked FREE Shipping!';
+                shippingPercent.innerText = '100%';
+            } else {
+                const pct = Math.min(100, Math.round((subtotal / shippingThreshold) * 100));
+                shippingBar.style.width = `${pct}%`;
+                shippingText.innerText = `Add $${remaining.toFixed(2)} more for Free Shipping!`;
+                shippingPercent.innerText = `${pct}%`;
+            }
+
+            // Update Pay button text inside Checkout Modal
+            const payText = document.getElementById('payButtonText');
+            if (payText) payText.innerText = `Complete Order ($${total.toFixed(2)})`;
+        }
+
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                alert('Please add items to your cart before checking out.');
+                return;
+            }
+            toggleCart(); // close cart
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            document.getElementById('checkoutFormContent').classList.add('hidden');
+            document.getElementById('checkoutSuccessContent').classList.remove('hidden');
+            document.getElementById('orderRefNumber').innerText = Math.floor(10000 + Math.random() * 90000);
+        }
+
+        function resetCart() {
+            cart = [];
+            isPromoApplied = false;
+            document.getElementById('promoMessage').classList.add('hidden');
+            document.getElementById('discountRow').classList.add('hidden');
+            document.getElementById('promoInput').value = '';
+            document.getElementById('checkoutFormContent').classList.remove('hidden');
+            document.getElementById('checkoutSuccessContent').classList.add('hidden');
+            updateCartUI();
+        }
+    </script>
+</body>
+</html>
